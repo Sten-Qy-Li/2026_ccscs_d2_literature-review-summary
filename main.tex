@@ -19,7 +19,6 @@
   \fcolorbox{red}{yellow!30}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
     \small\textbf{\textcolor{red}{PLACEHOLDER}}\enspace #1}}%
   \par\addvspace{\smallskipamount}}
-\newcommand{\checkme}[1]{\colorbox{yellow!60}{#1}}
 
 % A search query, boxed and set in typewriter type.
 \newcommand{\query}[1]{%
@@ -64,9 +63,7 @@ Both searches were run on 16 October 2026 without database-side filters: no limi
 \query{TITLE-ABS-KEY ( ( kubernetes OR "helm chart*" ) AND ( misconfigur* OR "configuration validation" OR "static analysis" OR "policy validation" ) )}
 
 \paragraph{Google Scholar} Any time, sorted by relevance, citations included, patents excluded. Scholar reported about 8,720 results; because that estimate is not a set that can be screened, screening stopped at a fixed depth of the first 160 results (16 pages):
-\query{Kubernetes (misconfiguration OR misconfigurations OR "configuration validat\checkme{ion" OR "static analysis")}}
-
-\placeholder{The saved Scholar screenshots show the query only up to ``configuration validat''. Confirm that the highlighted remainder matches the query you ran, then remove the highlight and this note.}
+\query{Kubernetes (misconfiguration OR misconfigurations OR "configuration validation" OR "static analysis")}
 
 \subsection{Citation-Graph Analysis}
 
