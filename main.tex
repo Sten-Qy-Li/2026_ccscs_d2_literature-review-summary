@@ -103,7 +103,7 @@ Each record was excluded at the first criterion it failed:
 
 \begin{description}
   \item[E1 English main text.] Full-text reading requires it; an English title or abstract alone does not qualify.
-  \item[E2 Not published by MDPI.] A publisher exclusion chosen by the author. It is reported separately because it may have removed relevant work.
+  \item[E2 Not published by MDPI.] Excluded because of past controversies surrounding this publisher. The exclusion is reported separately because it may have removed relevant work.
   \item[E3 Not on Beall's List.] Guards against potentially predatory publishers and journals (the \emph{authority} criterion of the C.R.A.A.P. test). The actual publisher and journal were checked against the publisher, standalone-journal and hijacked-journal lists~\cite{beallslist}; absence from the lists is not treated as an endorsement.
   \item[E4 Relevance.] The work must contribute substantively to at least one RQ: real manifest or chart defects, configuration or schema validation, CIS or Pod Security Standards (PSS) coverage, validator comparisons, or relevant admission-policy mechanisms. General Kubernetes usage, runtime intrusion detection and performance tuning are out of scope.
   \item[E5 Conditional thesis rule.] Fixed before full-text screening: if more than 18 works remained after E1--E4, bachelor's and master's theses were excluded to favor peer-reviewed publications. Doctoral dissertations were kept.
@@ -194,13 +194,11 @@ Three gaps named in RQ3 remain open in this set. First, results are tied to spec
 
 Together, the six papers answer RQ1 with repository-level evidence and RQ2 at the level of individual rules, and they answer RQ3 with controlled benchmarks that disagree on which tool is best. The remaining gaps indicate where the seminar report can add the most.
 
-% Optional disclosure. Check the course's rules on AI tools, then adapt or delete:
-% \section*{Use of AI Tools}
-% AI tools assisted with screening search records, extracting data from the
-% selected papers and drafting this summary. All decisions and the final text
-% are the author's responsibility.
-
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
+
+\section*{Use of AI Tools}
+
+AI assistants (OpenAI Codex with GPT-6, and Anthropic Claude Code with Claude Opus 5.5) were used to screen the search records, extract and check data from the papers, collect and screen the citation graph, and draft this summary and its \LaTeX{} layout. The author defined the topic, research questions and screening criteria, approved every selection decision, and is responsible for the final text.
 
 \end{document}
