@@ -1,0 +1,181 @@
+%% D2 literature review summary, Cloud Computing and Smart City Seminar
+%% (LTAT.06.0290), University of Tartu, Fall 2026.
+%%
+%% ACM two-column proceedings layout (acmart, sigconf). The `nonacm` option
+%% drops ACM publication furniture: copyright block, conference and DOI
+%% lines, and the "ACM Reference Format" box.
+%% Overleaf: compiler pdfLaTeX, main document main.tex.
+\documentclass[sigconf,nonacm]{acmart}
+
+\settopmatter{printfolios=true}
+
+% Narrow columns plus long hyphenated compounds: allow a little extra
+% interword stretch instead of lines running into the margin.
+\setlength{\emergencystretch}{1.5em}
+
+% Text that must be completed or checked before submission.
+\newcommand{\placeholder}[1]{%
+  \par\addvspace{\smallskipamount}\noindent
+  \fcolorbox{red}{yellow!30}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+    \small\textbf{\textcolor{red}{PLACEHOLDER}}\enspace #1}}%
+  \par\addvspace{\smallskipamount}}
+\newcommand{\checkme}[1]{\colorbox{yellow!60}{#1}}
+
+% A search query, boxed and set in typewriter type.
+\newcommand{\query}[1]{%
+  \par\addvspace{\smallskipamount}\noindent
+  \fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\raggedright\small\ttfamily #1}}%
+  \par\addvspace{\smallskipamount}}
+
+\begin{document}
+
+\title[Kubernetes Configuration Validation: Literature Review]{Configuration Validation of Real-World Kubernetes Manifests and Helm Charts: Literature Review Summary}
+\subtitle{Cloud Computing and Smart City Seminar (LTAT.06.0290), Fall 2026 --- Deliverable D2}
+
+\author{Sten (Qun-yan Li)}
+\email{qun.yan.li@ut.ee}
+\affiliation{%
+  \department{Institute of Computer Science}
+  \institution{University of Tartu}
+  \city{Tartu linn}
+  \country{Estonia}}
+
+\keywords{Kubernetes, Helm, misconfiguration, configuration validation, static analysis, literature review}
+
+\maketitle
+
+\section{Introduction}
+
+Kubernetes workloads are declared in YAML manifests, which are often packaged and templated as Helm charts. An insecure or incorrect setting in such a file is repeated every time the file is deployed, so a range of static validators has appeared that check manifests and charts before they reach a cluster. This summary describes how literature for the seminar topic \emph{configuration validation of real-world Kubernetes manifests and Helm charts} was assembled, and how six selected papers address the topic's research questions (RQs):
+
+\begin{description}
+  \item[RQ1:] What kinds of misconfiguration are commonly present in real-world Kubernetes manifests and Helm charts, and how have recent empirical studies (e.g., Rahman et al.\ 2023~\cite{rahman2023}; Minna, Massacci and Tuma 2025~\cite{minna2025}) characterized their prevalence and severity?
+  \item[RQ2:] Which static-analysis validators (e.g., \texttt{kube-linter}, Polaris, Checkov, KubeAudit, \texttt{conftest}/OPA) are in mainstream use, and what do they cover with respect to the CIS Kubernetes Benchmark and the Pod Security Standards?
+  \item[RQ3:] What do recent multi-validator comparisons report about tool coverage, inter-tool agreement, false-positive rate, and developer diagnostics --- and where do open questions remain (e.g., longitudinal replication with current versions, developer-usability studies, or Pod-Security-Standards-focused evaluations of the newer admission-policy mechanisms)?
+\end{description}
+
+\section{Search Methodology}
+
+\subsection{Database Searches}
+
+Both searches were run on 16 October 2026 without database-side filters: no limits on publication year, subject area, document type or language. This favors recall; the topic is narrow, and the Scopus result set was small enough to screen in full.
+
+\paragraph{Scopus} Advanced search on title, abstract and keywords; 86 documents found:
+\query{TITLE-ABS-KEY ( ( kubernetes OR "helm chart*" ) AND ( misconfigur* OR "configuration validation" OR "static analysis" OR "policy validation" ) )}
+
+\paragraph{Google Scholar} Any time, sorted by relevance, citations included, patents excluded. Scholar reported about 8,720 results; because that estimate is not a set that can be screened, screening stopped at a fixed depth of the first 160 results (16 pages):
+\query{Kubernetes (misconfiguration OR misconfigurations OR "configuration validat\checkme{ion" OR "static analysis")}}
+
+\placeholder{The saved Scholar screenshots show the query only up to ``configuration validat''. Confirm that the highlighted remainder matches the query you ran, then remove the highlight and this note.}
+
+\subsection{Citation-Graph Analysis}
+
+\placeholder{Not done yet (slide~15, step~2). Go through the works cited by, and citing, the topic's original article (depth~1). Record the starting article, the tool used (e.g., Scopus ``Cited by'', Google Scholar, Connected Papers), the date, each relevant article found and how it relates to the start (e.g., ``X cites Y''), and which of these were also found by the database searches. Add new candidates to Table~\ref{tab:flow} and revisit the selection in Section~\ref{sec:selected}.}
+
+\subsection{Inclusion and Exclusion Criteria}
+
+Each record was excluded at the first criterion it failed:
+
+\begin{description}
+  \item[E1 English main text.] Full-text reading requires it; an English title or abstract alone does not qualify.
+  \item[E2 Not published by MDPI.] A publisher exclusion chosen by the author. It is reported separately because it may have removed relevant work.
+  \item[E3 Not on Beall's List.] Guards against potentially predatory publishers and journals (the \emph{authority} criterion of the C.R.A.A.P. test). The actual publisher and journal were checked against the publisher, standalone-journal and hijacked-journal lists~\cite{beallslist}; absence from the lists is not treated as an endorsement.
+  \item[E4 Relevance.] The work must contribute substantively to at least one RQ: real manifest or chart defects, configuration or schema validation, CIS or Pod Security Standards (PSS) coverage, validator comparisons, or relevant admission-policy mechanisms. General Kubernetes usage, runtime intrusion detection and performance tuning are out of scope.
+  \item[E5 Conditional thesis rule.] Fixed before full-text screening: if more than 18 works remained after E1--E4, bachelor's and master's theses were excluded to favor peer-reviewed publications. Doctoral dissertations were kept.
+\end{description}
+
+\noindent No limits on citation count or article length were applied.
+
+\subsection{Screening Flow}
+
+Records from both databases were merged and deduplicated, screened on title, snippet and venue where a decision was clear-cut, and then screened on full text (Table~\ref{tab:flow}). Full-text screening found no further MDPI or Beall's List publications. Twenty-one records whose venue could not be established from the search results, and seven records for whole proceedings volumes, were not carried forward; nine full texts could not be accessed. These losses, the MDPI exclusion and the 160-result Scholar depth are the main limitations of the search.
+
+\begin{table}[t]
+  \caption{Screening flow, 16 October 2026.}
+  \label{tab:flow}
+  \small
+  \begin{tabular}{@{}p{0.66\linewidth}rr@{}}
+    \toprule
+    Stage & Removed & Left \\
+    \midrule
+    Retrieved: Google Scholar 160, Scopus 86 & & 246 \\
+    Duplicates merged: 35 across databases, 4 within Scholar & 39 & 207 \\
+    Preliminary screen: MDPI 7, Beall's List 1, clearly irrelevant 4 & 12 & 195 \\
+    Not carried forward: venue unresolved 21, whole proceedings 7 & 28 & 167 \\
+    Full text not accessible & 9 & 158 \\
+    Full-text screen: non-English 2, not relevant 79 & 81 & 77 \\
+    Thesis rule: master's 17, bachelor's 1 & 18 & 59 \\
+    \midrule
+    Selected for this review (Section~\ref{sec:selected}) & & 6 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Selecting the Six Papers}
+
+The 59 eligible works were compared on their abstracts, conclusions and screening evidence, and the strongest candidates were read in more depth. Six were chosen as a set rather than ranked by citation count or venue, using four criteria: direct fit to the RQs; primary evidence with a clear evaluation design; complementary contributions, so that the set spans real artifacts, controlled benchmarks and capability analyses; and enough methodological detail for critical comparison.
+
+\section{Selected Papers}
+\label{sec:selected}
+
+Table~\ref{tab:papers} lists the six papers. Three were found by both searches and three by Google Scholar only. The presentation candidate is \citet{minna2025}: it combines the largest real-world corpus in the set with a seven-tool comparison mapped to CIS recommendations, a manual check of the alerts, and an LLM-repair experiment whose results leave clear open problems, which suits a presentation covering problem, methods, results and open challenges.
+
+\begin{table}[t]
+  \caption{Selected papers. GS: Google Scholar.}
+  \label{tab:papers}
+  \small
+  \begin{tabular}{@{}llll@{}}
+    \toprule
+    Paper & Venue & Found via & RQs \\
+    \midrule
+    Rahman et al.~\cite{rahman2023} & TOSEM 2023 & GS, Scopus & 1, 3 \\
+    Minna et al.~\cite{minna2025}$^{\star}$ & EMSE 2025 & GS, Scopus & 1, 3 \\
+    Shamim et al.~\cite{shamim2025} & ICSE 2025 & GS, Scopus & 1--3 \\
+    Eom et al.~\cite{eom2026} & PACMSE 2026 & GS & 2, 3 \\
+    Krieger et al.~\cite{krieger2026} & ARES 2026 (short) & GS & 2, 3 \\
+    Diarra et al.~\cite{diarra2024} & ICIN 2024 & GS & 2, 3 \\
+    \bottomrule
+  \end{tabular}
+
+  \smallskip
+  \footnotesize $^{\star}$Presentation candidate.
+\end{table}
+
+\section{Synthesis}
+
+\subsection{Misconfigurations in Real Artifacts (RQ1)}
+
+The real-artifact studies agree that misconfigurations are common, but they count different things. \citet{rahman2023} mined 2,039 manifests from 92 open-source repositories and derived 11 categories of security misconfiguration, such as absent resource limits, an absent \texttt{securityContext} and activation of \texttt{hostIPC}; their linter, SLI-KUBE, found 1,051 instances. These are instances, not the share of affected manifests, and the open-source sample is not shown to represent production clusters. \citet{minna2025} provide the Helm counterpart at a larger scale: of 12,965 charts downloaded from Artifact Hub, 4,961 rendered templates were analyzed with seven open-source tools, and the most frequent findings were use of the default namespace and missing seccomp and AppArmor profiles. The 3,822 charts that failed to render without manual setup or customization were dropped, so the corpus favors charts that work with their defaults. \citet{shamim2025} start instead from the 53 configurations prescribed by the CIS Amazon EKS Benchmark and check 544 proprietary and open-source files against them; between 5\% and 40\% of their 20 survey respondents were unfamiliar with 16 of these prescriptions. Their headline result, that 18.0\% (Company-A) and 17.9\% (open source) of files violate at least one prescription, is inconsistent with the 178 and 85 violating files they report for datasets of 188 and 356 files, so this review does not rely on those rates.
+
+Across the three studies, the recurring problems are pod- and container-level security settings (security contexts, seccomp and AppArmor profiles, host namespaces), missing resource limits, service-account token mounting and namespace hygiene. The evidence concerns rule violations in repository snapshots, not how often these settings are exploitable in running clusters.
+
+\subsection{What Validators Cover (RQ2)}
+
+No single study evaluates all the validators named in RQ2. Checkov and KubeLinter are covered most often; Polaris appears only in \citet{krieger2026} and \citet{diarra2024}, and Conftest/OPA only in Diarra et al.'s capability analysis. Tool selection is weak evidence of ``mainstream use'': the studies chose tools mainly as CNCF projects~\cite{minna2025}, by availability and purpose criteria applied to a GitHub search~\cite{eom2026}, by popularity~\cite{krieger2026}, or partly by internal use at one company~\cite{shamim2025}. None measures adoption.
+
+Coverage of the CIS Benchmark and PSS is uneven and rule-specific. Of five tools, only Kubescape supports every category of the 53 EKS prescriptions~\cite{shamim2025}. \citet{krieger2026} compare eight guideline sets: the CIS Kubernetes Benchmark has the broadest categorical coverage and is the one scanners reference most, yet the other guidelines add more than 50 recommendations, and none of their ten scanners detects namespaces missing the pod-security labels through which the PSS are enforced. \citet{eom2026} show why ``supports CIS'' is hard to compare: scanner documentation is ambiguous, and implementations apply different criteria to the same documented check. For \texttt{securityContext.sysctls}, Kubescape flags any manifest that does not define sysctls explicitly, whereas Trivy and KubeLinter flag only node-affecting parameters. \citet{diarra2024} add a capability view of 16 tools against 13 criteria. They classify checks as field-, structure- or architecture-based (the last spanning several resources, such as an Ingress and the Service it routes to), and also assess JSON Schema validation, access to external and in-cluster data, user-defined rules and the detection of inconsistent rules. They note that the admission controllers Gatekeeper and Kyverno take a single resource as input, and they rewrite rules in CEL, the language of Kubernetes' ValidatingAdmissionPolicy.
+
+\subsection{How Validators Compare (RQ3)}
+
+The controlled benchmarks agree that coverage is fragmented, but not on which tool is best. On a benchmark of 4,109 manifests and 144 scripts covering the 281 misconfigurations its ten scanners target, the best static recall was 43.8\% (Kubescape)~\cite{eom2026}, so even the strongest scanner missed most of what the scanners collectively aim to detect. On 241 manifests derived from 79 guideline recommendations, only Trivy and KICS combined an F1-score of at least 0.69 with coverage above 50\%. Polaris was competitive with fewer than 50 rules, and Kubescape, with the largest rule set, led on neither measure~\cite{krieger2026}. RBAC and service-account checks were weakest (no scanner above 48\%), and network-policy coverage stayed below 50\% for every tool. The contrasting Kubescape results suggest that rankings depend on how a benchmark is built, so a ``best scanner'' finding does not transfer between benchmarks.
+
+Agreement is low on both what to check and how much it matters. Only nine policies are common to all seven tools in \citet{minna2025}. For 20 of the issues in \citet{krieger2026}, the scanners' severity scores differ by 5 or more points on a common 0--10 scale; leaving \texttt{readOnlyRootFilesystem} unset ranges from 0.1 (Kubesec) to 9.5 (kube-score).
+
+Direct false-positive evidence is thin, and the metrics differ. Against their own mapping of files to violated prescriptions, \citet{shamim2025} report a highest precision of 0.41 and 0.43 and a highest recall of 0.53 and 0.65 on their two datasets. \citet{minna2025} manually checked a sample of raised alerts and found false positives for only one KICS policy, which checks a deprecated setting. Neither result is a false-positive rate, FP/(FP+TN): a sample of raised alerts cannot measure missed or correctly silent cases, and a benchmark containing only positive cases, like that of \citet{eom2026}, cannot measure false positives at all. On diagnostics, the evidence is practitioner feedback rather than usability testing: practitioners agreed to fix 6 of the 10 misconfigurations reported by \citet{rahman2023}, and Shamim et al.'s survey shows limited awareness of the prescriptions.
+
+\subsection{Open Questions}
+
+Three gaps named in RQ3 remain open in this set. First, results are tied to specific tool versions and a changing tool landscape: Terrascan was archived in 2025~\cite{krieger2026}, and PodSecurityPolicy has been deprecated in favor of the PSS~\cite{minna2025,krieger2026}, so longitudinal replication with current versions is needed. Second, none of the six papers runs a controlled developer-usability study. Third, no paper empirically evaluates PSS enforcement through the newer admission mechanisms: Krieger et al.\ find that no static scanner checks the namespace labels, and Diarra et al.\ propose, but do not measure, CEL rules for ValidatingAdmissionPolicy.
+
+Together, the six papers answer RQ1 with repository-level evidence and RQ2 at the level of individual rules, and they answer RQ3 with controlled benchmarks that disagree on which tool is best. The remaining gaps indicate where the seminar report can add the most.
+
+% Optional disclosure. Check the course's rules on AI tools, then adapt or delete:
+% \section*{Use of AI Tools}
+% AI tools assisted with screening search records, extracting data from the
+% selected papers and drafting this summary. All decisions and the final text
+% are the author's responsibility.
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\end{document}

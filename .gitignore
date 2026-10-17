@@ -1,0 +1,13 @@
+# LaTeX build output (Overleaf builds its own; ignore local builds)
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.synctex(busy)
+*.toc
+*.xdv
+main.pdf
