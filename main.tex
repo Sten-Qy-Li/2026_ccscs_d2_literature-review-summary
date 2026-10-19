@@ -32,6 +32,13 @@
   \city{Tartu linn}
   \country{Estonia}}
 
+% This summary has no abstract. acmart typesets the abstract as an unnumbered
+% section just before the keywords, so that slot carries the AI-use statement.
+\renewcommand\abstractname{Use of AI Tools}
+\begin{abstract}
+AI assistants (OpenAI Codex with GPT-6, and Anthropic Claude Code with Claude Opus 5.5) were used to screen the search records, extract and check data from the papers, collect and screen the citation graph, and draft the \LaTeX{} layout of this summary. The author defined the topic, research questions and screening criteria, approved every selection decision, and is responsible for the final text.
+\end{abstract}
+
 \keywords{Kubernetes, Helm, misconfiguration, configuration validation, static analysis, literature review}
 
 \maketitle
@@ -196,9 +203,5 @@ Together, the six papers answer RQ1 with repository-level evidence and RQ2 at th
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
-
-\section*{Use of AI Tools}
-
-AI assistants (OpenAI Codex with GPT-6, and Anthropic Claude Code with Claude Opus 5.5) were used to screen the search records, extract and check data from the papers, collect and screen the citation graph, and draft this summary and its \LaTeX{} layout. The author defined the topic, research questions and screening criteria, approved every selection decision, and is responsible for the final text.
 
 \end{document}
